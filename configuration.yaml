@@ -1,0 +1,65 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home 
+  # Location required to calculate the time the sun rises and sets
+  latitude: -34.7148682
+  longitude: -58.2891066 
+  # C for Celcius, F for Fahrenheit
+  temperature_unit: C
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/Argentina/Buenos_Aires
+
+mysensors:
+  gateways:
+    - device: '/dev/ttyUSB0'
+  debug: true
+  persistence: true
+  version: '1.5'
+  optimistic: true 
+
+device_tracker:
+  platform: ddwrt
+  host: IP
+  username: USER
+  password: NONE
+
+switch:
+  platform: rpi_gpio
+  ports:
+    27: Table TV Lamp
+  invert_logic: false
+     
+binary_sensor:
+  platform: rpi_gpio
+  ports:
+    17: Motion Living
+  pull_mode: "UP"
+  bouncetime: 50
+  invert_logic: false
+
+input_boolean:
+   cine_mode:
+     initial: off
+   alarm:
+     initial: off
+
+notify:
+  name: pushover
+  platform: pushover
+  api_key: 
+  user_key: 
+
+sun:
+
+http:
+  api_password: 
+
+discovery:
+
+group: !include groups.yaml
+
+scene: !include scenes.yaml
+
+automation: !include automation.yaml
+
+script: !include scripts.yaml

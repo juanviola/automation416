@@ -1,0 +1,44 @@
+- alias: Alarm Notification
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_living
+      from: 'off'
+      to: 'on'
+  condition:
+    - condition: state
+      entity_id: input_boolean.alarm
+      state: 'on'
+  action:
+    service: notify.pushover
+    data:
+       title: "Alarm"
+       message: "Somebody is in the house"
+
+- alias: Alarm On lights off
+  trigger:
+    - platform: state
+      entity_id: input_boolean.alarm
+      from: 'off'
+      to: 'on'
+  action:
+    service: homeassistant.turn_off
+    entity_id: group.living_lights 
+
+- alias: turn lights on if motion detected
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_living
+      from: 'off'
+      to: 'on'
+  condition:
+    - condition: state
+      entity_id: input_boolean.cine_mode
+      state: 'off'
+    - condition: numeric_state
+      entity_id: sun.sun
+      value_template: '{{ state.attributes.elevation }}'
+      below: 0.3
+  action:
+    service: homeassistant.turn_on
+    entity_id: script.timed_lamp
+

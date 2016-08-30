@@ -1,0 +1,54 @@
+#buscagente:
+#  alias: 'Busca gente que acabe de entrar en casa'
+#  sequence:
+#    - service: shell_command.busca_gente
+#buscagentequesale:
+#  alias: 'Buscando gente que salga'
+#  sequence:
+#    - service: shell_command.busca_gente
+#    - delay:
+#        minutes: 1
+#    - service: shell_command.busca_gente
+#    - delay:
+#        minutes: 3
+#    - service: shell_command.busca_gente
+#    - delay:
+#        minutes: 2
+#    - service: shell_command.busca_gente
+
+
+timed_lamp:
+  alias: "Turn on lamp and set timer"
+  sequence:
+    - service: script.turn_off
+      data:
+        entity_id: script.timer_off
+
+    - service: homeassistant.turn_on
+      data: 
+        entity_id: group.living_lights
+
+#    - service: homeassistant.turn_on
+#      data: 
+#        entity_id: switch.table_tv_lamp
+#    - service: light.turn_on
+#      data:
+#        entity_id: switch.living_foot_lamp_19_1
+    - service: script.turn_on
+      data:
+        entity_id: script.timer_off
+
+timer_off:
+  alias: "Turn off group.living_lights after 10 minutes"
+  sequence:
+    - delay: 
+        minutes: 10
+    - service: homeassistant.turn_off
+      data: 
+        entity_id: group.living_lights
+#    - service: light.turn_off
+#      data:
+#        entity_id: switch.living_foot_lamp_19_1
+
+#shell_command:
+#  test: touch /tmp/shellcommand

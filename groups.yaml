@@ -1,0 +1,5 @@
+living lights:
+  entities:
+    - switch.living_foot_lamp_19_1
+    - switch.table_tv_lamp
+    

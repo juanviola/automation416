@@ -1,0 +1,21 @@
+- name: 'arrived home'
+  entities:
+    input_boolean.cine_mode:
+      state: off
+    switch.living_foot_lamp_19_1:
+      state: on
+    switch.table_tv_lamp:
+      state: on
+
+- name: movies
+  entities:
+    input_boolean.cine_mode:
+      state: on
+    switch.living_foot_lamp_19_1:
+      state: off
+    switch.table_tv_lamp:
+      state: on
+    script.timer_off:
+      state: off    
+    switch.table_light_20_1:
+      state: off
