@@ -28,4 +28,23 @@
       when: not st.stat.exists
 
     - name: clone git config
-      git: repo=https://github.com/juanviola/home-automation.git dest=/home/hass/home-assistant-config update=no
+      git: repo=https://github.com/juanviola/home-automation.git dest=/home/hass/home-automation update=yes
+
+    - name: create autostart script
+      copy: src=/home/hass/home-automation/playbooks/home-assistant.systemd dest=/etc/systemd/system/home-assistant@hass.service
+
+    - stat: path=/home/hass/.homeassistant/configuration.yaml
+      register: st
+
+    - name: copy config files 
+      command: bash -c "cp -R /home/hass/home-automation/homeassistant/* /home/hass/.homeassistant"
+      when: not st.stat.exists
+
+    - name: reload the daemon 
+      command: systemctl --system daemon-reload
+
+    - name: register the service 
+      command: systemctl enable home-assistant@hass
+
+    - debug: msg="To start HA run [ systemctl start home-assistant@hass ]"
+
