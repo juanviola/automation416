@@ -1,0 +1,31 @@
+---
+- hosts: all
+  vars:
+    APP: "homeassistant"
+
+  tasks:
+    - name: install required packages
+      action: apt pkg={{item}} state=installed install_recommends=yes
+      with_items:
+        - python-pip
+        - python3-dev
+        - virtualenv
+
+    - name: create home assistant user
+      user: name=hass state=present
+
+    - name: create home assistant directory
+      file: path=/home/hass/.homeassistant state=directory mode=0755 owner=hass
+
+    - name: create virtualenv
+      command: virtualenv -p python3 /home/hass
+
+    - stat: path=/home/hass/bin/hass
+      register: st
+
+    - name: install homeassistant
+      pip: name=homeassistant virtualenv=/home/hass
+      when: not st.stat.exists
+
+    - name: clone git config
+      git: repo=https://github.com/juanviola/home-automation.git dest=/home/hass/home-assistant-config update=no
