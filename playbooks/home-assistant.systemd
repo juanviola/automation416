@@ -4,8 +4,8 @@ After=network.target
 
 [Service]
 Type=simple
-User=hass
-ExecStart=/home/hass/bin/hass
+User=root
+ExecStart=/usr/local/bin/hass
 
 [Install]
 WantedBy=multi-user.target

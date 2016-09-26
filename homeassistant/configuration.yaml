@@ -1,12 +1,10 @@
 homeassistant:
-  # Name of the location where Home Assistant is running
   name: Home 
-  # Location required to calculate the time the sun rises and sets
   latitude: -34.7148682
   longitude: -58.2891066 
   unit_system: metric
-  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: America/Argentina/Buenos_Aires
+  elevation: 23
 
 mysensors:
   gateways:
@@ -18,9 +16,9 @@ mysensors:
 
 device_tracker:
   platform: ddwrt
-  host: IP
-  username: USER
-  password: NONE
+  host: 192.168.x.x
+  username: username
+  password: password
 
 switch:
   platform: rpi_gpio
@@ -45,13 +43,15 @@ input_boolean:
 notify:
   name: pushover
   platform: pushover
-  api_key: 
-  user_key: 
+  api_key: api_key
+  user_key: user_key
 
 sun:
 
+frontend:
+
 http:
-  api_password: 
+  api_password: Password
 
 discovery:
 

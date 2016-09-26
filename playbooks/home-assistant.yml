@@ -9,42 +9,40 @@
       with_items:
         - python-pip
         - python3-dev
-        - virtualenv
+        - python3-pip
 
-    - name: create home assistant user
-      user: name=hass state=present
+    - name: create homeassistant directory
+      file: path=/root/.homeassistant state=directory mode=0755 owner=root
 
-    - name: create home assistant directory
-      file: path=/home/hass/.homeassistant state=directory mode=0755 owner=hass
+    - name: install home assistant
+      pip: name=homeassistant executable=pip3 
 
-    - name: create virtualenv
-      command: virtualenv -p python3 /home/hass
-
-    - stat: path=/home/hass/bin/hass
+    - stat: path=/root/home-automation
       register: st
 
-    - name: install homeassistant
-      pip: name=homeassistant virtualenv=/home/hass
-      when: not st.stat.exists
-
     - name: clone git config
-      git: repo=https://github.com/juanviola/home-automation.git dest=/home/hass/home-automation update=yes
-
+      git: repo=https://github.com/juanviola/home-automation.git dest=/root/home-automation update=yes
+      when: not st.stat.exists
+        
     - name: create autostart script
-      copy: src=/home/hass/home-automation/playbooks/home-assistant.systemd dest=/etc/systemd/system/home-assistant@hass.service
+      copy: src=/root/home-automation/playbooks/home-assistant.systemd dest=/etc/systemd/system/home-assistant@root.service
 
-    - stat: path=/home/hass/.homeassistant/configuration.yaml
+    - stat: path=/root/.homeassistant/configuration.yaml
       register: st
 
     - name: copy config files 
-      command: bash -c "cp -R /home/hass/home-automation/homeassistant/* /home/hass/.homeassistant"
+      copy: 
+        src: /root/home-automation/homeassistant/
+        dest: /root/.homeassistant
+        group: hass
+        owner: hass 
       when: not st.stat.exists
 
     - name: reload the daemon 
       command: systemctl --system daemon-reload
 
     - name: register the service 
-      command: systemctl enable home-assistant@hass
+      command: systemctl enable home-assistant@root
 
-    - debug: msg="To start HA run [ systemctl start home-assistant@hass ]"
+    - debug: msg="To start HA run [ systemctl start home-assistant@root ]"
 
