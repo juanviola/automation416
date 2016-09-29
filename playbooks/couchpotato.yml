@@ -1,0 +1,40 @@
+---
+- hosts: all
+  vars:
+    APP: "Couchpotato"
+
+  tasks:
+    - group: name=couchpotato state=present
+    - user: name=couchpotato comment="Couchpotato" group=couchpotato state=present
+
+    - stat: path=/usr/bin/git
+      register: gitbin
+
+    - name: install git if not installed
+      apt: pkg=git state=installed
+      when: not gitbin.stat.exists
+
+    - stat: path=/opt/couchpotato
+      register: couchpotatodir
+
+    - name: clone couchpotato from github
+      git: repo=https://github.com/CouchPotato/CouchPotatoServer.git dest=/opt/couchpotato
+      when: not couchpotatodir.stat.exists
+
+    - name: chown /opt/couchpotato to CouchPotato user
+      file: path=/opt/couchpotato owner=couchpotato group=couchpotato recurse=yes  
+
+    - name: copy init 
+      copy: src=/opt/couchpotato/init/couchpotato.service dest=/etc/systemd/system/couchpotato.service
+
+    - replace: dest=/etc/systemd/system/couchpotato.service regexp='var\/lib\/CouchPotatoServer' replace='opt/couchpotato' 
+
+    - name: reload the daemon 
+      command: systemctl --system daemon-reload
+
+    - name: register the service 
+      command: systemctl enable couchpotato
+
+    - name: start couchpotato 
+      command: systemctl start couchpotato
+
