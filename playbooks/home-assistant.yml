@@ -33,9 +33,10 @@
     - name: copy config files 
       copy: 
         src: /root/home-automation/homeassistant/
-        dest: /root/.homeassistant
-        group: hass
-        owner: hass 
+        dest: /root/.homeassistant/
+        group: root
+        owner: root
+        force: yes 
       when: not st.stat.exists
 
     - name: reload the daemon 
