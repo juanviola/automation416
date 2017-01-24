@@ -1,0 +1,34 @@
+---
+- hosts: all
+
+  tasks:
+    - service:
+      name: ssh
+      state: started
+
+    - name: install required packages
+      action: apt pkg={{item}} state=installed install_recommends=yes
+      with_items:
+        - ntfs-3g
+
+    - name: create usb mount directory
+      file: path=/mnt/USB2T state=directory mode=0755 owner=root 
+
+    - name: Mount USB2T read-write
+      mount:
+        path: /mnt/USB2T
+        src: /dev/sda1
+        fstype: ntfs-3g
+        opts: rw
+        state: present
+
+    - name: create usb logs directory
+      file: path=/mnt/USB2T/logs state=directory mode=0755 owner=root
+
+    - name: Mount log directory 
+      mount:
+        path: /mnt/USB2T/logs
+        src: /var/log
+        fstype: ntfs-3g
+        opts: rw
+        state: present
