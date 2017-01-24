@@ -14,7 +14,7 @@
 
     - name: Mount USB2T read-write
       mount:
-        path: /mnt/USB2T
+        dest: /mnt/USB2T
         src: /dev/sda1
         fstype: ntfs-3g
         opts: rw
@@ -25,7 +25,7 @@
 
     - name: Mount log directory 
       mount:
-        path: /mnt/USB2T/logs
+        dest: /mnt/USB2T/logs
         src: /var/log
         fstype: ntfs-3g
         opts: rw
