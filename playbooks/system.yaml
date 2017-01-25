@@ -10,23 +10,22 @@
         - ntfs-3g
 
     - name: create usb mount directory
-      file: path=/mnt/USB2T state=directory mode=0755 owner=root 
+      file: path=/mnt/USB2T state=directory mode=0755 owner=root
 
     - name: Mount USB2T read-write
-      mount:
-        dest: /mnt/USB2T
-        src: /dev/sda1
-        fstype: ntfs-3g
-        opts: rw
-        state: present
+      mount: name=/mnt/USB2T src=/dev/sda1 fstype=ntfs-3g opts=rw state=present
 
-    - name: create usb logs directory
-      file: path=/mnt/USB2T/logs state=directory mode=0755 owner=root
-
-    - name: Mount log directory 
-      mount:
-        dest: /mnt/USB2T/logs
+    - synchronize:
         src: /var/log
-        fstype: ntfs-3g
-        opts: rw
-        state: present
+        dest: /mnt/USB2T/log
+
+    - service: name=rsyslog state=stopped
+
+    - name: create symlink for /var/log
+      file:
+        src: /mnt/USB2T/log/log
+        dest: /var/log
+        state: link
+
+    - service: name=rsyslog state=started
+    
