@@ -21,10 +21,16 @@ device_tracker:
   password: password
 
 switch:
-  platform: rpi_gpio
-  ports:
-    27: Table TV Lamp
-  invert_logic: false
+  - platform: rpi_gpio
+    ports:
+      27: Table TV Lamp
+    invert_logic: false
+  - platform: tplink
+    host: 192.168.20.116
+    name: Wall
+  - platform: tplink
+    host: 192.168.20.131
+    name: Foot Lamp
      
 binary_sensor:
   platform: rpi_gpio
