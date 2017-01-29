@@ -1,5 +1,5 @@
 living lights:
   entities:
-    - switch.living_foot_lamp_19_1
+    - switch.foot_lamp
+    - switch.wall
     - switch.table_tv_lamp
-    
