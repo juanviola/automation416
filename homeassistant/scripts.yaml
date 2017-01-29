@@ -25,11 +25,11 @@ timed_lamp:
         entity_id: script.timer_off
 
     - service: homeassistant.turn_on
-      data: 
+      data:
         entity_id: group.living_lights
 
 #    - service: homeassistant.turn_on
-#      data: 
+#      data:
 #        entity_id: switch.table_tv_lamp
 #    - service: light.turn_on
 #      data:
@@ -41,10 +41,10 @@ timed_lamp:
 timer_off:
   alias: "Turn off group.living_lights after 10 minutes"
   sequence:
-    - delay: 
+    - delay:
         minutes: 10
     - service: homeassistant.turn_off
-      data: 
+      data:
         entity_id: group.living_lights
 #    - service: light.turn_off
 #      data:
