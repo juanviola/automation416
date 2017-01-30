@@ -24,6 +24,26 @@
     service: homeassistant.turn_off
     entity_id: group.living_lights
 
+- alias: cine on
+  trigger:
+    - platform: state
+      entity_id: input_boolean.cine_mode
+      from: 'off'
+      to: 'on'
+  action:
+    service: homeassistant.turn_on
+    entity_id: scene.movies
+
+- alias: cine off
+  trigger:
+    - platform: state
+      entity_id: input_boolean.cine_mode
+      from: 'on'
+      to: 'off'
+  action:
+    service: homeassistant.turn_on
+    entity_id: scene.arrived_home
+
 - alias: turn lights on if motion detected
   trigger:
     - platform: state
