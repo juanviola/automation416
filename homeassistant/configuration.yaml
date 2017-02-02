@@ -52,6 +52,15 @@ notify:
   api_key: api_key
   user_key: user_key
 
+sensor:
+  - platform: time_date
+    display_options:
+      - 'time'
+      - 'date'
+      - 'date_time'
+      - 'time_date'
+      - 'time_utc'
+      - 'beat'
 sun:
 
 history:
