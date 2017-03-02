@@ -44,6 +44,12 @@
 
     - name: register the service 
       command: systemctl enable home-assistant@root
+      
+    - cron:
+      name: "sync configuration to USB"
+      minute: "0"
+      hour: "0"
+      job: "rsync -a /root/.homeassistant /mnt/USB2T"
 
     - debug: msg="To start HA run [ systemctl start home-assistant@root ]"
 
