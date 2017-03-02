@@ -20,6 +20,9 @@
         dest: /mnt/USB2T/log
 
     - service: name=rsyslog state=stopped
+    
+    - name: Move /var/log
+      command: mv /var/log /var/log_OLD
 
     - name: create symlink for /var/log
       file:
