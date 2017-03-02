@@ -8,6 +8,12 @@
       action: apt pkg={{item}} state=installed install_recommends=yes
       with_items:
         - ntfs-3g
+        - ssh
+        
+    - service: 
+      name: ssh
+      state: runnnig
+      enabled: yes
 
     - name: create usb mount directory
       file: path=/mnt/USB2T state=directory mode=0755 owner=root
