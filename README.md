@@ -1,4 +1,5 @@
 # home-automation
+quick reminder for myself
 
 ## Order
 ```
