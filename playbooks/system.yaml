@@ -19,7 +19,8 @@
     - name: copy samba config
       copy: src=/root/home-automation/samba/smb.conf dest=/etc/samba/smb.conf
     
-    - service: name=ssh state=started enabled=yes
+    - service: name=ssh state=started 
+    - command: update-rc.d ssh defaults
 
     - name: create usb mount directory
       file: path=/mnt/USB2T state=directory mode=0755 owner=root
@@ -46,5 +47,6 @@
         state: link
 
     - service: name=rsyslog state=started
-    - service: name=samba state=started enabled=yes   
+    - service: name=samba state=started 
+    - command: update-rc.d samba defaults
     
