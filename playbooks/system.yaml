@@ -10,6 +10,7 @@
         - ntfs-3g
         - ssh
         - samba
+        - ntpdate
         
     - service: name=samba state=stopped
     
