@@ -13,7 +13,7 @@
         
     - service: 
         name: ssh
-        state: runnnig
+        state: started
         enabled: yes
 
     - name: create usb mount directory
