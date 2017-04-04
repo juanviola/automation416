@@ -3,7 +3,7 @@ quick reminder for myself
 
 ## Order
 ```
-$ ./install.sh
+$ bash <(curl https://raw.githubusercontent.com/juanviola/home-automation/master/install.sh)
 $ ansible-playbook system.yaml
 $ ansible-playbook home-assistant.yaml
 ```
