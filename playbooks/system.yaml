@@ -9,16 +9,17 @@
       with_items:
         - ntfs-3g
         - ssh
-        - samba
         - ntpdate
+#        - samba
+
         
-    - service: name=samba state=stopped
+#    - service: name=samba state=stopped
     
-    - name: backup samba original config
-      command: mv /etc/samba/smb.conf /etc/samba/smb.conf.bak
+#    - name: backup samba original config
+#      command: mv /etc/samba/smb.conf /etc/samba/smb.conf.bak
       
-    - name: copy samba config
-      copy: src=/root/home-automation/samba/smb.conf dest=/etc/samba/smb.conf
+#    - name: copy samba config
+#      copy: src=/root/home-automation/samba/smb.conf dest=/etc/samba/smb.conf
     
     - service: name=ssh state=started 
     - command: update-rc.d ssh defaults
@@ -48,6 +49,6 @@
         state: link
 
     - service: name=rsyslog state=started
-    - service: name=samba state=started 
+#    - service: name=samba state=started 
     - command: update-rc.d samba defaults
     
