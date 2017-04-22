@@ -12,7 +12,7 @@
         - python3-pip
 
     - name: create homeassistant directory
-      file: path=/home/homeassistant/.homeassistant state=directory mode=0755 owner=root
+      file: path=/mnt/USB2T/HA/.homeassistant state=directory mode=0755 owner=root
 
     - name: install home assistant
       pip: name=homeassistant executable=pip3 
@@ -27,13 +27,13 @@
     - name: create autostart script
       copy: src=/root/home-automation/playbooks/home-assistant.systemd dest=/etc/systemd/system/home-assistant@root.service
 
-    - stat: path=/home/homeassistant/.homeassistant/configuration.yaml
+    - stat: path=/mnt/USB2T/HA/.homeassistant/configuration.yaml
       register: st
 
     - name: copy config files 
       copy: 
         src: /root/home-automation/homeassistant/
-        dest: /home/homeassistant/.homeassistant/
+        dest: /mnt/USB2T/HA/.homeassistant/
         group: root
         owner: root
         force: yes 
@@ -45,11 +45,11 @@
     - name: register the service 
       command: systemctl enable home-assistant@root
       
-    - cron:
-        name: "sync configuration to USB"
-        minute: "0"
-        hour: "0"
-        job: "rsync -av --exclude=deps /home/homeassistant/.homeassistant/ /mnt/USB2T/.homeassistant"
+#    - cron:
+#        name: "sync configuration to USB"
+#        minute: "0"
+#        hour: "0"
+#        job: "rsync -av --exclude=deps /home/homeassistant/.homeassistant/ /mnt/USB2T/.homeassistant"
 
     - debug: msg="To start HA run [ systemctl start home-assistant@root ]"
 
