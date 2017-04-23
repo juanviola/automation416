@@ -50,5 +50,5 @@
 
     - service: name=rsyslog state=started
 #    - service: name=samba state=started 
-    - command: update-rc.d samba defaults
+#    - command: update-rc.d samba defaults
     
