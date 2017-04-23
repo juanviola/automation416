@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Type=simple
 User=root
-ExecStart=/usr/local/bin/hass
+ExecStart=/usr/local/bin/hass -c /mnt/USB2T/HA/.homeassistant
 
 [Install]
 WantedBy=multi-user.target
